@@ -1,7 +1,7 @@
 from math import ceil
 
-sampleInput = input().split()
-startDay, numberOfDays = int(sampleInput[0]), int(sampleInput[1])
+case = input().split()
+startDay, numberOfDays = int(case[0]), int(case[1])
 
 def genRow(row):
 	res = ""
