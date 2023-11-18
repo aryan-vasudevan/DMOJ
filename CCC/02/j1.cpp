@@ -17,8 +17,9 @@ int main() {
     };
     
     int n;
-
     std::cin >> n;
+    
     std::cout << nums[n];
 
+    return 0;
 }

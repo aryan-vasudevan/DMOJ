@@ -7,7 +7,6 @@ double planB(int dayTime, int eveTime, int weekendTime);
 
 int main() {
     int dayTime, eveTime, weekendTime;
-
     std::cin >> dayTime;
     std::cin >> eveTime;
     std::cin >> weekendTime;
