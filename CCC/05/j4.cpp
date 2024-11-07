@@ -56,13 +56,12 @@ int main() {
     int curDir = 0;
 
     for (int i = 0; i <= steps; i++) {
-        std::cout << pos[0] << "," << pos[1] << " ";
-
         if (blocked.count(pos + directions[curDir]) || numOfAdj(pos, blocked, w1, h1) == 4 || outOfBounds(w1, h1, pos + directions[curDir])) {
             curDir = (curDir + 1) % 12;
         }
         pos = pos + directions[curDir];
     }
+    std::cout << pos[0] << "\n" << pos[1];
 
     return 0;
 }
