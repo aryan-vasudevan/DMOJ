@@ -17,19 +17,19 @@ options = [[grid[0]]]
 
 for i in range(1, R):
     curRow = grid[i]
-    prevOptions = options[i - 1]
+    prevOptions = options[-1]
     newOptions = [curRow]
     
     for curOption in prevOptions:
-        def recursive():
-            newOption = xor(curOption, newOptions[-1])
-            if newOption in newOptions:
-                return 0
-            else:
-                newOptions.append(newOption)
-                recursive()
-        recursive()
-    
+        x = [curRow]
+        newOption = xor(curOption, x[-1])
+        if newOption in newOptions:
+            continue
+        else:
+            x.append(newOption)
+        newOptions += x[1:]
+
+    print(newOptions)
     options.append(newOptions)
 
 print(len(options[-1]))
