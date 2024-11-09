@@ -10,6 +10,7 @@ while True:
 
     if type == 77:
         break
+    
     elif type == 99:
         streamNum = int(input()) - 1
         percentage = int(input())
