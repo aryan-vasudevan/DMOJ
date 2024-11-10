@@ -26,13 +26,15 @@ def getPath(start, stop):
         if not counter % 2:
             counter = 0
             multiplier += 1
-            sizes.append(multiplier)
+        
+        sizes.append(multiplier)
     
     if directions[current] == (0, -1) or directions[current] == (0, 1):
         dimensions = [sizes[-2], sizes[-1]]
     else:
         dimensions = [sizes[-1], sizes[-2]]
     
+    # Path
     path.pop()
 
     for i in range(len(path)):
@@ -42,27 +44,66 @@ def getPath(start, stop):
 
     extraSteps = len(path) - steps + 1
 
-    return path, extraSteps, dimensions
+    # Start pos
+    if len(path) == 0 or path[0] == (1, 0):
+        x, y = 0, 0
+    elif path[0] == (0, -1):
+        x, y = 0, dimensions[1] - 1
+    elif path[0] == (0, 1):
+        x, y = dimensions[0] - 1, 0
+    else:
+        x, y = dimensions[0] - 1, dimensions[1] - 1
 
-start, stop = [int(x) for x in input().split()]
+    return path, extraSteps, dimensions, x, y
 
-path, extraSteps, dimensions = getPath(start, stop)
+def getMaxInCol(grid, column):
+    max = 0
+    for row in grid:
+        if len(str(row[column])) > max:
+            max = len(str(row[column]))
+    
+    return max
 
-grid = []
-for i in range(dimensions[1]):
-    grid.append([0] * dimensions[0])
+def run(start, stop, last):
+    path, extraSteps, dimensions, x, y = getPath(start, stop)
 
-x, y = 0, 0
+    grid = []
+    for i in range(dimensions[1]):
+        grid.append([" "] * dimensions[0])
 
-for direction in path[:extraSteps]:
-    x, y = x + direction[0], y + direction[1]
+    for direction in path[:extraSteps]:
+        x, y = x + direction[0], y + direction[1]
 
-num = stop
-for direction in path[extraSteps:]:
+    num = stop
+    for direction in path[extraSteps:]:
+        grid[y][x] = num
+        x, y = x + direction[0], y + direction[1]
+        num -= 1
+
     grid[y][x] = num
-    x, y = x + direction[0], y + direction[1]
-    num -= 1
 
-grid[y][x] = num
+    for column in range(dimensions[0]):
+        maxDigits = getMaxInCol(grid, column)
 
-print(grid)
+        for row in range(dimensions[1]):
+            grid[row][column] = ((maxDigits - len(str(grid[row][column]))) * " ") + str(grid[row][column])
+
+    for i in range(dimensions[1]):
+        row = grid[i]
+        if i == dimensions[1] - 1 and not last:
+            print(" ".join(x for x in row) + "\n")
+        else:
+            print(" ".join(x for x in row))
+
+N = int(input())
+spirals = []
+for _ in range(N):
+    start, stop = [int(x) for x in input().split()]
+    spirals.append([start, stop])
+
+for i in range(len(spirals)):
+    spiral = spirals[i]
+    if i == len(spirals) - 1:
+        run(spiral[0], spiral[1], True)
+    else:
+        run(spiral[0], spiral[1], False)
