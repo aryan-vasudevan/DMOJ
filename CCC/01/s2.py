@@ -28,7 +28,6 @@ def getPath(start, stop):
             multiplier += 1
         
         sizes.append(multiplier)
-    
     if directions[current] == (0, -1) or directions[current] == (0, 1):
         dimensions = [sizes[-2], sizes[-1]]
     else:
