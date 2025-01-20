@@ -41,4 +41,3 @@ for n in checkPairs:
             print("No")
             return 0
     findLoop(n)
-    
